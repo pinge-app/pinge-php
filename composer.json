@@ -15,6 +15,9 @@
             "Pinge\\SDK\\": "src/"
         }
     },
+    "require": {
+        "php": "^7.3|^8.0"
+    },
     "require-dev": {
         "pinge/pinge-coding-standard": "^1.0"
     }
