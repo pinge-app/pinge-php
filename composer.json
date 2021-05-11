@@ -1,0 +1,21 @@
+{
+    "name": "pinge/pinge-php",
+    "description": "The Pinge PHP SDK.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pinge",
+            "email": "hello@pinge.app"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Pinge\\SDK\\": "src/"
+        }
+    },
+    "require-dev": {
+        "pinge/pinge-coding-standard": "^1.0"
+    }
+}
