@@ -1,0 +1,39 @@
+name: Unit Tests
+
+on: [ push, pull_request ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.0, 7.4, 7.3]
+
+    name: PHP ${{ matrix.php }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        coverage: pcov
+
+    - name: Cache dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.composer/cache/files
+        key: dependencies-composer-${{ hashFiles('composer.json') }}
+
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+    - name: Sniff the code
+      run: vendor/bin/phpcs --standard=./ruleset.xml --extensions=php ./
+
+    - name: Execute tests via PHPUnit
+      run: ./vendor/bin/phpunit ./tests

@@ -55,7 +55,7 @@ final class Dsn
         }
 
         foreach (['scheme', 'host', 'path', 'user'] as $component) {
-            if (array_key_exists($component, $parts) || !strlen((string) $parts[$component])) {
+            if (!array_key_exists($component, $parts) || !strlen((string) $parts[$component])) {
                 throw new \InvalidArgumentException("The DSN ({$dsn}) must contain a scheme, host, path and user.");
             }
         }
@@ -64,7 +64,7 @@ final class Dsn
             throw new \InvalidArgumentException("The scheme of the DSN ({$dsn}) must be either http or https.");
         }
 
-        $id = (int) $parts['path'];
+        $id = (int) str_replace('/', '', $parts['path']);
         if ($id < 1) {
             throw new \InvalidArgumentException("The DSN ({$dsn}) must contain a valid project id.");
         }

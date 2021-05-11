@@ -15,10 +15,20 @@
             "Pinge\\SDK\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Pinge\\Tests\\": "tests/"
+        }
+    },
     "require": {
         "php": "^7.3|^8.0"
     },
     "require-dev": {
-        "pinge/pinge-coding-standard": "^1.0"
+        "pinge/pinge-coding-standard": "^1.0",
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit tests/"
     }
 }
