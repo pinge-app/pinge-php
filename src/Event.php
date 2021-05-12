@@ -8,9 +8,9 @@ use Throwable;
 final class Event
 {
     /**
-     * The calculated event id.
+     * The event id.
      *
-     * @var string
+     * @var \Pinge\SDK\EventId
      */
     private $eventId;
 
@@ -52,15 +52,15 @@ final class Event
     {
         $this->timestamp = microtime(true);
         $this->exception = $exception;
-        $this->eventId = $this->calculateEventId($exception);
+        $this->eventId = EventId::createFromException($exception);
     }
 
     /**
      * Get the event id.
      *
-     * @return string
+     * @return \Pinge\SDK\EventId
      */
-    public function eventId(): string
+    public function eventId(): EventId
     {
         return $this->eventId;
     }
@@ -113,24 +113,5 @@ final class Event
     public function stacktrace(): array
     {
         return $this->exception->getTrace();
-    }
-
-    /**
-     * Calculate the exception event id.
-     *
-     * @param  \Throwable $exception The exception object.
-     * @return string|false
-     */
-    private function calculateEventId(Throwable $exception)
-    {
-        return hash(
-            'crc32',
-            sprintf(
-                '%s|%s|%s',
-                $exception->getMessage(),
-                $exception->getFile(),
-                $exception->getLine()
-            )
-        );
     }
 }
