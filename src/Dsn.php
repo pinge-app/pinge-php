@@ -69,6 +69,12 @@ final class Dsn
             throw new \InvalidArgumentException("The DSN ({$dsn}) must contain a valid project id.");
         }
 
+        if (!array_key_exists('port', $parts)) {
+            $parts['port'] = $parts['scheme'] === 'http'
+                ? 80
+                : 443;
+        }
+
         return new self(
             $parts['scheme'],
             $parts['host'],
