@@ -43,6 +43,41 @@ final class Event
     private $exception;
 
     /**
+     * The current os.
+     *
+     * @var string
+     */
+    private $os;
+
+    /**
+     * The server name.
+     *
+     * @var string|null
+     */
+    private $server;
+
+    /**
+     * The runtime.
+     *
+     * @var string
+     */
+    private $runtime;
+
+    /**
+     * The runtime's version.
+     *
+     * @var string
+     */
+    private $runtimeVersion;
+
+    /**
+     * The current URL.
+     *
+     * @var string|null
+     */
+    private $url;
+
+    /**
      * Constructor
      *
      * @param  \Throwable $exception The exception object.
@@ -53,6 +88,11 @@ final class Event
         $this->timestamp = microtime(true);
         $this->exception = $exception;
         $this->eventId = EventId::createFromException($exception);
+        $this->os = PHP_OS;
+        $this->server = $_SERVER['SERVER_NAME'] ?? null;
+        $this->runtime = 'PHP';
+        $this->runtimeVersion = phpversion();
+        $this->url = $_SERVER['REQUEST_URI'] ?? null;
     }
 
     /**
@@ -113,5 +153,55 @@ final class Event
     public function stacktrace(): array
     {
         return $this->exception->getTrace();
+    }
+
+    /**
+     * Get the os.
+     *
+     * @return string
+     */
+    public function os(): string
+    {
+        return $this->os;
+    }
+
+    /**
+     * Get the server.
+     *
+     * @return null|string
+     */
+    public function server(): ?string
+    {
+        return $this->server;
+    }
+
+    /**
+     * Get the runtime.
+     *
+     * @return string
+     */
+    public function runtime(): string
+    {
+        return $this->runtime;
+    }
+
+    /**
+     * Get the runtime version.
+     *
+     * @return string
+     */
+    public function runtimeVersion(): string
+    {
+        return $this->runtimeVersion;
+    }
+
+    /**
+     * Get the current url if any.
+     *
+     * @return null|string
+     */
+    public function url(): ?string
+    {
+        return $this->url;
     }
 }

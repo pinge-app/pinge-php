@@ -35,6 +35,12 @@ final class HttpTransport implements TransportContract
                 'environment' => $event->environment(),
                 'timestamp' => $event->timestamp(),
                 'sdk_version' => Client::VERSION,
+
+                'os' => $event->os(),
+                'server' => $event->server(),
+                'runtime' => $event->runtime(),
+                'runtime_version' => $event->runtimeVersion(),
+                'url' => $event->url(),
             ],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => [
