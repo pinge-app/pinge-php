@@ -5,6 +5,7 @@ namespace Pinge\SDK\Transport;
 
 use Pinge\SDK\Dsn;
 use Pinge\SDK\Event;
+use Pinge\SDK\Client;
 
 final class HttpTransport implements TransportContract
 {
@@ -30,8 +31,9 @@ final class HttpTransport implements TransportContract
                 'event_id' => (string) $event->eventId(),
                 'name' => $event->name(),
                 'type' => $event->type(),
-                'stacktract' => json_encode($event->stacktrace()),
+                'stacktrace' => json_encode($event->stacktrace()),
                 'timestamp' => $event->timestamp(),
+                'sdk_version' => Client::VERSION,
             ],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => [

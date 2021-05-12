@@ -9,6 +9,13 @@ use Pinge\SDK\Transport\TransportContract;
 final class Client
 {
     /**
+     * The client version.
+     *
+     * @var string
+     */
+    public const VERSION = '0.0.1';
+
+    /**
      * The DSN object.
      *
      * @var \Pinge\SDK\Dsn
