@@ -32,6 +32,7 @@ final class HttpTransport implements TransportContract
                 'name' => $event->name(),
                 'type' => $event->type(),
                 'stacktrace' => json_encode($event->stacktrace()),
+                'environment' => $event->environment(),
                 'timestamp' => $event->timestamp(),
                 'sdk_version' => Client::VERSION,
             ],
