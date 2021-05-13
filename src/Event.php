@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Pinge\SDK;
 
 use Throwable;
+use Pinge\SDK\Stacktrace\Stacktrace;
 
 final class Event
 {
@@ -148,11 +149,13 @@ final class Event
     /**
      * Get the event stracktrace.
      *
-     * @return array
+     * @return \Pinge\SDK\Stacktrace\Stacktrace|null
      */
-    public function stacktrace(): array
+    public function stacktrace(): ?Stacktrace
     {
-        return $this->exception->getTrace();
+        return count($this->exception->getTrace())
+            ? Stacktrace::createFromException($this->exception)
+            : null;
     }
 
     /**
