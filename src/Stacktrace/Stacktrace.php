@@ -69,8 +69,14 @@ final class Stacktrace
      */
     public static function createFromException(Throwable $exception): Stacktrace
     {
+        $originatingFrame = [
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'function' => '',
+        ];
+
         return new self(array_map(function ($trace): Frame {
             return Frame::createFromTrace($trace);
-        }, $exception->getTrace()));
+        }, [$originatingFrame, ...$exception->getTrace()]));
     }
 }
