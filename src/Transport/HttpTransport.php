@@ -55,7 +55,7 @@ final class HttpTransport implements TransportContract
         }
 
         $status = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-        if ($status !== 200 && $status !== 204) {
+        if (!in_array($status, [200, 201, 204])) {
             curl_close($handle);
             return false;
         }
