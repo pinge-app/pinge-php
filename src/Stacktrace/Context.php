@@ -15,22 +15,22 @@ final class Context implements JsonSerializable
     private $line;
 
     /**
-     * The line content.
+     * The line context.
      *
      * @var string
      */
-    private $content;
+    private $context;
 
     /**
      * Constructor
      * @param  integer $line    The line number.
-     * @param  string  $content The line content.
+     * @param  string  $context The line context.
      * @return void
      */
-    public function __construct(int $line, string $content)
+    public function __construct(int $line, string $context)
     {
         $this->line = $line;
-        $this->content = $content;
+        $this->context = $context;
     }
 
     /**
@@ -44,13 +44,13 @@ final class Context implements JsonSerializable
     }
 
     /**
-     * Get the content.
+     * Get the context.
      *
      * @return string
      */
-    public function content(): string
+    public function context(): string
     {
-        return $this->content;
+        return $this->context;
     }
 
     /**
@@ -60,6 +60,6 @@ final class Context implements JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        return ['line' => $this->line(), 'content' => $this->content()];
+        return ['line' => $this->line(), 'context' => $this->context()];
     }
 }
