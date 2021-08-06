@@ -13,14 +13,14 @@ final class Stacktrace
     /**
      * The frame list.
      *
-     * @var array
+     * @var \Pinge\SDK\Stacktrace\Frame[]
      */
     private $frames = [];
 
     /**
      * Constructor
      *
-     * @param  array $frames The frame list.
+     * @param  \Pinge\SDK\Stacktrace\Frame[] $frames The frame list.
      * @return void
      *
      * @throws \InvalidArgumentException Thrown when no frames have been passed.
@@ -44,7 +44,7 @@ final class Stacktrace
     /**
      * Get the frame list.
      *
-     * @return array
+     * @return \Pinge\SDK\Stacktrace\Frame[]
      */
     public function frames(): array
     {

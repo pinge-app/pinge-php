@@ -32,7 +32,7 @@ final class Frame implements JsonSerializable
     /**
      * The pre context lines.
      *
-     * @var array
+     * @var \Pinge\SDK\Stacktrace\Context[]
      */
     private $preContext = [];
 
@@ -46,7 +46,7 @@ final class Frame implements JsonSerializable
     /**
      * The post context lines.
      *
-     * @var array
+     * @var \Pinge\SDK\Stacktrace\Context[]
      */
     private $postContext;
 
@@ -120,7 +120,7 @@ final class Frame implements JsonSerializable
     /**
      * Get the pre context.
      *
-     * @return array
+     * @return \Pinge\SDK\Stacktrace\Context[]
      */
     public function preContext(): array
     {
@@ -130,7 +130,7 @@ final class Frame implements JsonSerializable
     /**
      * Get the post context.
      *
-     * @return array
+     * @return \Pinge\SDK\Stacktrace\Context[]
      */
     public function postContext(): array
     {
@@ -140,7 +140,7 @@ final class Frame implements JsonSerializable
     /**
      * Serialize the object.
      *
-     * @return array
+     * @return string[]
      */
     public function jsonSerialize(): array
     {
@@ -189,7 +189,7 @@ final class Frame implements JsonSerializable
             for ($i = $start; $i < $stop; $i++) {
                 $file->seek($i);
 
-                // Break out if there is no more lines.
+                // Break out if there are no more lines.
                 if ($file->eof()) {
                     break;
                 }

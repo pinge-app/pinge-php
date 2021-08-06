@@ -1,17 +1,23 @@
 name: Unit Tests
 
-on: [ push, pull_request ]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   laravel-tests:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
         php: [8.0, 7.4]
+        dependency-version: [prefer-lowest, prefer-stable]
+        os: [ubuntu-latest, windows-latest]
 
-    name: PHP ${{ matrix.php }}
+    name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
     steps:
     - name: Checkout code
@@ -27,13 +33,13 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.composer/cache/files
-        key: dependencies-composer-${{ hashFiles('composer.json') }}
+        key: dependencies-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Install dependencies
+      run: composer install --no-interaction --no-suggest --prefer-dist --${{ matrix.dependency-version }}
 
     - name: Sniff the code
       run: vendor/bin/phpcs --standard=./ruleset.xml --extensions=php ./
 
-    - name: Execute tests via PHPUnit
+    - name: Execute tests using PHPUnit
       run: ./vendor/bin/phpunit ./tests --coverage-text

@@ -56,7 +56,7 @@ final class Context implements JsonSerializable
     /**
      * Cast the object to string.
      *
-     * @return array
+     * @return string[]
      */
     public function jsonSerialize(): array
     {

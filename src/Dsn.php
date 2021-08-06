@@ -34,13 +34,6 @@ final class Dsn
     private $token;
 
     /**
-     * The project id.
-     *
-     * @var integer
-     */
-    private $projectId;
-
-    /**
      * Create an instance using a string.
      *
      * @param  string $dsn The DSN.
@@ -64,11 +57,6 @@ final class Dsn
             throw new \InvalidArgumentException("The scheme of the DSN ({$dsn}) must be either http or https.");
         }
 
-        $id = (int) str_replace('/', '', $parts['path']);
-        if ($id < 1) {
-            throw new \InvalidArgumentException("The DSN ({$dsn}) must contain a valid project id.");
-        }
-
         if (!array_key_exists('port', $parts)) {
             $parts['port'] = $parts['scheme'] === 'http'
                 ? 80
@@ -79,28 +67,25 @@ final class Dsn
             $parts['scheme'],
             $parts['host'],
             $parts['port'],
-            $parts['user'],
-            $id
+            $parts['user']
         );
     }
 
     /**
      * Constructor
      *
-     * @param  string  $scheme    The protocol scheme.
-     * @param  string  $host      The host.
-     * @param  integer $port      The port number.
-     * @param  string  $token     The project token.
-     * @param  integer $projectId The project id.
+     * @param  string  $scheme The protocol scheme.
+     * @param  string  $host   The host.
+     * @param  integer $port   The port number.
+     * @param  string  $token  The project token.
      * @return void
      */
-    public function __construct(string $scheme, string $host, int $port, string $token, int $projectId)
+    public function __construct(string $scheme, string $host, int $port, string $token)
     {
         $this->scheme = $scheme;
         $this->host = $host;
         $this->port = $port;
         $this->token = $token;
-        $this->projectId = $projectId;
     }
 
     /**
@@ -144,16 +129,6 @@ final class Dsn
     }
 
     /**
-     * Get the project id.
-     *
-     * @return integer
-     */
-    public function projectId(): int
-    {
-        return $this->projectId;
-    }
-
-    /**
      * Cast this object into a string.
      *
      * @return string
@@ -161,15 +136,14 @@ final class Dsn
     public function __toString(): string
     {
         return sprintf(
-            '%s://%s@%s%s/%s',
+            '%s://%s@%s%s/',
             $this->scheme(),
             $this->token(),
             $this->host(),
             ($this->scheme() === 'http' && $this->port() !== 80) ||
                 ($this->scheme() === 'https' && $this->port() !== 443)
                 ? ':' . $this->port()
-                : null,
-            $this->projectId()
+                : null
         );
     }
 }

@@ -57,14 +57,6 @@ class DsnTest extends TestCase
         Dsn::createFromString('file://user@host.com/path');
     }
 
-    public function test_parser_throws_on_incorrect_project_id(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The DSN (http://user@host.com/id) must contain a valid project id.');
-
-        Dsn::createFromString('http://user@host.com/id');
-    }
-
     public function test_parser_creates_a_dsn_object(): void
     {
         $dsn = Dsn::createFromString('http://token@host.com:81/1');
@@ -73,12 +65,11 @@ class DsnTest extends TestCase
         $this->assertSame('token', $dsn->token());
         $this->assertSame('host.com', $dsn->host());
         $this->assertSame(81, $dsn->port());
-        $this->assertSame(1, $dsn->projectId());
     }
 
     public function test_parser_reconstructs_dsn(): void
     {
-        $dsn = Dsn::createFromString('http://token@host.com:81/1');
-        $this->assertSame('http://token@host.com:81/1', (string) $dsn);
+        $dsn = Dsn::createFromString('http://token@host.com:81/');
+        $this->assertSame('http://token@host.com:81/', (string) $dsn);
     }
 }

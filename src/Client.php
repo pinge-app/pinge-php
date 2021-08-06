@@ -13,7 +13,7 @@ final class Client
      *
      * @var string
      */
-    public const VERSION = '0.0.1';
+    public const VERSION = '0.0.2';
 
     /**
      * The DSN object.

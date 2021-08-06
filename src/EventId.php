@@ -16,6 +16,7 @@ final class EventId
 
     /**
      * Constructor
+     *
      * @param  string $id The event id.
      * @return void
      */
