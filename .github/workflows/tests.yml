@@ -40,6 +40,7 @@ jobs:
 
     - name: Sniff the code
       run: vendor/bin/phpcs --standard=./ruleset.xml --extensions=php ./
+      if: ${{ matrix.os }} == 'ubuntu-latest'
 
     - name: Execute tests using PHPUnit
       run: ./vendor/bin/phpunit ./tests --coverage-text
