@@ -47,7 +47,7 @@ final class Dsn
             throw new \InvalidArgumentException("The DSN is invalid ({$dsn}).");
         }
 
-        foreach (['scheme', 'host', 'path', 'user'] as $component) {
+        foreach (['scheme', 'host', 'user'] as $component) {
             if (!array_key_exists($component, $parts) || !strlen((string) $parts[$component])) {
                 throw new \InvalidArgumentException("The DSN ({$dsn}) must contain a scheme, host, path and user.");
             }
