@@ -33,14 +33,6 @@ class DsnTest extends TestCase
         Dsn::createFromString('user@host.com/path');
     }
 
-    public function test_parser_throws_on_missing_path(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The DSN (http://user@host.com) must contain a scheme, host, path and user.');
-
-        Dsn::createFromString('http://user@host.com');
-    }
-
     public function test_parser_throws_on_missing_host(): void
     {
         $this->expectException(InvalidArgumentException::class);
