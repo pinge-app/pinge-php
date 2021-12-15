@@ -44,7 +44,7 @@ final class EventId
     public static function createFromException(Throwable $exception): self
     {
         return new self(hash(
-            'crc32',
+            'md5',
             sprintf(
                 '%s|%s|%s',
                 $exception->getMessage(),
