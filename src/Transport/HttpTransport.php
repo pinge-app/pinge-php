@@ -27,25 +27,24 @@ final class HttpTransport implements TransportContract
         $handle = curl_init((string) $this->dsn);
         curl_setopt_array($handle, [
             CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => [
+            CURLOPT_POSTFIELDS => json_encode([
                 'event_id' => (string) $event->eventId(),
-                'name' => $event->name(),
-                'type' => $event->type(),
+                'message' => $event->message(),
+                'exception' => $event->exception(),
                 'stacktrace' => $event->stacktrace(),
                 'environment' => $event->environment(),
                 'timestamp' => $event->timestamp(),
                 'sdk_version' => Client::VERSION,
 
                 'os' => $event->os(),
-                'server' => $event->server(),
                 'runtime' => $event->runtime(),
-                'runtime_version' => $event->runtimeVersion(),
+                'server' => $event->server(),
                 'url' => $event->url(),
-            ],
+            ]),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
+                'Content-Type: application/json',
+                'Accept: application/json',
             ],
         ]);
 

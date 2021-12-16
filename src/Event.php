@@ -30,13 +30,6 @@ final class Event
     private $environment;
 
     /**
-     * The event name.
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * The exception object.
      *
      * @var \Throwable
@@ -65,13 +58,6 @@ final class Event
     private $runtime;
 
     /**
-     * The runtime's version.
-     *
-     * @var string
-     */
-    private $runtimeVersion;
-
-    /**
      * The current URL.
      *
      * @var string|null
@@ -91,8 +77,7 @@ final class Event
         $this->eventId = EventId::createFromException($exception);
         $this->os = PHP_OS;
         $this->server = $_SERVER['SERVER_NAME'] ?? null;
-        $this->runtime = 'PHP';
-        $this->runtimeVersion = phpversion();
+        $this->runtime = 'PHP ' . phpversion();
         $this->url = $_SERVER['REQUEST_URI'] ?? null;
     }
 
@@ -127,21 +112,21 @@ final class Event
     }
 
     /**
-     * Get the event type.
+     * Get the event exception class.
      *
      * @return string
      */
-    public function type(): string
+    public function exception(): string
     {
         return get_class($this->exception);
     }
 
     /**
-     * Get the event name.
+     * Get the event message.
      *
      * @return string
      */
-    public function name(): string
+    public function message(): string
     {
         return $this->exception->getMessage();
     }
@@ -186,16 +171,6 @@ final class Event
     public function runtime(): string
     {
         return $this->runtime;
-    }
-
-    /**
-     * Get the runtime version.
-     *
-     * @return string
-     */
-    public function runtimeVersion(): string
-    {
-        return $this->runtimeVersion;
     }
 
     /**

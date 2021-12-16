@@ -4,11 +4,12 @@ declare(strict_types = 1);
 namespace Pinge\SDK\Stacktrace;
 
 use Throwable;
+use JsonSerializable;
 use InvalidArgumentException;
 use UnexpectedValueException;
 use Pinge\SDK\Stacktrace\Frame;
 
-final class Stacktrace
+final class Stacktrace implements JsonSerializable
 {
     /**
      * The frame list.
@@ -78,5 +79,15 @@ final class Stacktrace
         return new self(array_map(function ($trace): Frame {
             return Frame::createFromTrace($trace);
         }, [$originatingFrame, ...$exception->getTrace()]));
+    }
+
+    /**
+     * Transform the object to JSON.
+     *
+     * @return \Pinge\SDK\Stacktrace\Frame[]
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->frames;
     }
 }

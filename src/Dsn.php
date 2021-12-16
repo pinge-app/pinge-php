@@ -136,7 +136,7 @@ final class Dsn
     public function __toString(): string
     {
         return sprintf(
-            '%s://%s@%s%s/',
+            '%s://%s@%s%s/beacon',
             $this->scheme(),
             $this->token(),
             $this->host(),
